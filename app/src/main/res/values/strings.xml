@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Lab 1</string>
+    <string name="mass_tv">Mass [kg]</string>
+    <string name="height_tv">Height [cm]</string>
+    <string name="count_button">Count</string>
+    <string name="middle_tv">BMI VALUE</string>
+</resources>
