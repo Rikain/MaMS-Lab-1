@@ -8,4 +8,7 @@
     <string name="middle_tv">BMI VALUE</string>
     <string name="metric_item">Metric system</string>
     <string name="imperial_item">Imperial system</string>
+    <string name="invalid_input_title">Invalid input</string>
+    <string name="invalid_input_msg">Invalid input numbers!</string>
+    <string name="invalid_input_btn">OK</string>
 </resources>

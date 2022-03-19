@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -42,19 +43,28 @@ public class MainActivity extends AppCompatActivity {
         count_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String height = String.valueOf(height_et.getText());
-                String mass = String.valueOf(mass_et.getText());
+                String height = height_et.getText().toString();
+                String mass = mass_et.getText().toString();
                 if (bmi.validateInput(height, mass)){
                     String bmi_value = bmi.calculateBMI(height, mass);
                     bmi_tv.setText(bmi_value);
                     bmi_tv.setTextColor(bmi.getBMIColor(MainActivity.this, bmi_value));
                 }else{
-                    //AlertDialog alert(MainActivity.this);
+                    AlertDialog alert_dialog = new AlertDialog.Builder(MainActivity.this)
+                            .setTitle(R.string.invalid_input_title)
+                            .setMessage(R.string.invalid_input_msg)
+                            .setPositiveButton(R.string.invalid_input_btn, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            })
+                            .create();
+                    alert_dialog.show();
                 }
                 return;
             }
         });
-
         Log.d(TAG, "The onCreate() event");
     }
 

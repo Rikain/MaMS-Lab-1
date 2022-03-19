@@ -16,16 +16,17 @@ public class BMI {
     }
 
     boolean validateInput(String height, String mass){
-        if (height == null || height.length() == 0 || mass == null || mass.length() == 0){
+        if (height.isEmpty() || mass.isEmpty()){
             return false;
+        }else{
+            try {
+                Double.valueOf(height);
+                Double.valueOf(mass);
+            } catch(Exception e){
+                return false;
+            }
+            return true;
         }
-        try {
-            Double.valueOf(height);
-            Double.valueOf(mass);
-        }catch(Exception e){
-            return false;
-        }
-        return true;
     }
 
     String calculateBMI(String height, String mass){
