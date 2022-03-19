@@ -2,4 +2,5 @@
     <dimen name="space_small">10dp</dimen>
     <dimen name="space_large">20dp</dimen>
     <dimen name="input_tv">50dp</dimen>
+    <dimen name="bmi_text_size">24sp</dimen>
 </resources>

@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">Lab 1</string>
-    <string name="mass_tv">Mass [kg]</string>
-    <string name="height_tv">Height [cm]</string>
+    <string name="mass_tv_m">Mass [kg]</string>
+    <string name="height_tv_m">Height [cm]</string>
+    <string name="mass_tv_i">Mass [lb]</string>
+    <string name="height_tv_i">Height [in]</string>
     <string name="count_button">Count</string>
     <string name="middle_tv">BMI VALUE</string>
+    <string name="metric_item">Metric system</string>
+    <string name="imperial_item">Imperial system</string>
 </resources>

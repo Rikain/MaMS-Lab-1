@@ -7,11 +7,12 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/bmi_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="224dp"
         android:text="@string/middle_tv"
+        android:textSize="@dimen/bmi_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,9 +31,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/mass_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mass_tv" />
+            android:text="@string/mass_tv_m" />
 
         <EditText
             android:id="@+id/massInput"
@@ -46,10 +48,10 @@
             android:layout_height="@dimen/space_large" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/height_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/height_tv" />
+            android:text="@string/height_tv_m" />
 
         <EditText
             android:id="@+id/heightInput"
