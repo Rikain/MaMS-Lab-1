@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -95,6 +96,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.imperial_item:
                 switchMeasurement(false);
+                return true;
+            case R.id.information_item:
+                Intent intent = new Intent(this, InformationActivity.class);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

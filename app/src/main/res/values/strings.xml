@@ -11,4 +11,6 @@
     <string name="invalid_input_title">Invalid input</string>
     <string name="invalid_input_msg">Invalid input numbers!</string>
     <string name="invalid_input_btn">OK</string>
+    <string name="info_item">Information about author</string>
+    <string name="info_tv">Author: Bartłomiej Koptyra</string>
 </resources>

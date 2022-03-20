@@ -10,6 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab1">
         <activity
+            android:name=".InformationActivity"
+            android:parentActivityName=".MainActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
