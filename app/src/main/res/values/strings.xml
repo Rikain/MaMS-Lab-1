@@ -13,4 +13,10 @@
     <string name="invalid_input_btn">OK</string>
     <string name="info_item">Information about author</string>
     <string name="info_tv">Author: Bartłomiej Koptyra</string>
+    <string name="info_underweight">Underweight</string>
+    <string name="info_normal_weight">Normal weight</string>
+    <string name="info_overweight">Overweight</string>
+    <string name="info_obese">Obese</string>
+
+
 </resources>

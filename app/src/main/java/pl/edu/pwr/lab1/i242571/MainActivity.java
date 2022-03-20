@@ -19,6 +19,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "TAG";
+    public static final String BMI_MESSAGE = "pl.edu.pwr.lab1.i242571.BMI_MESSAGE";
 
     private BMI bmi;
     private TextView bmi_tv;
@@ -66,6 +67,18 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         });
+        bmi_tv.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                if (bmi_tv.getText().toString() != getResources().getString(R.string.middle_tv)){
+                    Intent intent = new Intent(v.getContext(), BMIInfoActivity.class);
+                    intent.putExtra(BMI_MESSAGE, bmi_tv.getText().toString());
+                    startActivity(intent);
+                }
+            }
+
+        });
+
         Log.d(TAG, "The onCreate() event");
     }
 
