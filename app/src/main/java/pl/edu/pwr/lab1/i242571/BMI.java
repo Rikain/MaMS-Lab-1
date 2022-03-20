@@ -12,11 +12,13 @@ public class BMI {
         OBESE
     }
 
-    private boolean metric = true;
+    private static final int precision = 1;
     private static final double metricToImperial = 0.0703;
     private static final double underWeight = 18.5;
     private static final double normalWeight = 24.9;
     private static final double overWeight = 29.9;
+
+    private boolean metric = true;
 
     public void switchSystem(boolean to_metric){
         metric = to_metric;
@@ -27,7 +29,10 @@ public class BMI {
             return false;
         }else{
             try {
-                Double.valueOf(height);
+                Double h = Double.valueOf(height);
+                if (h == 0){
+                    return false;
+                }
                 Double.valueOf(mass);
             } catch(Exception e){
                 return false;
@@ -41,7 +46,7 @@ public class BMI {
         if(!metric){
             bmi = bmi * metricToImperial;
         }
-        return String.format("%.2f", bmi);
+        return String.format("%."+Integer.toString(precision)+"f", bmi);
     }
 
     public static bmi_level getBMILevel(String bmi){
