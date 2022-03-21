@@ -1,17 +1,20 @@
 package pl.edu.pwr.lab1.i242571;
 
 
+import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import static androidx.test.InstrumentationRegistry.getInstrumentation;
+import static androidx.test.espresso.Espresso.getIdlingResources;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
@@ -37,6 +40,10 @@ import static org.hamcrest.Matchers.is;
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class UITest {
+    private String getResourceString(int id) {
+        Context targetContext = InstrumentationRegistry.getTargetContext();
+        return targetContext.getResources().getString(id);
+    }
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
@@ -77,14 +84,14 @@ public class UITest {
         materialButton.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(IsInstanceOf.<View>instanceOf(android.widget.TextView.class), withText("Invalid input"),
+                allOf(IsInstanceOf.<View>instanceOf(android.widget.TextView.class), withText(getResourceString(R.string.invalid_input_title)),
                         withParent(allOf(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
                                 withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
                         isDisplayed()));
-        textView.check(matches(withText("Invalid input")));
+        textView.check(matches(withText(getResourceString(R.string.invalid_input_title))));
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(android.R.id.button1), withText("OK"),
+                allOf(withId(android.R.id.button1), withText(getResourceString(R.string.invalid_input_btn)),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
@@ -104,7 +111,7 @@ public class UITest {
         appCompatEditText3.perform(replaceText("180"), closeSoftKeyboard());
 
         ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.button), withText("Count"),
+                allOf(withId(R.id.button), withText(getResourceString(R.string.count_button)),
                         childAtPosition(
                                 allOf(withId(R.id.linearLayout),
                                         childAtPosition(
@@ -131,10 +138,10 @@ public class UITest {
         materialTextView.perform(click());
 
         ViewInteraction textView3 = onView(
-                allOf(withId(R.id.bmi_info_tv), withText("Underweight"),
+                allOf(withId(R.id.bmi_info_tv), withText(getResourceString(R.string.info_underweight)),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        textView3.check(matches(withText("Underweight")));
+        textView3.check(matches(withText(getResourceString(R.string.info_underweight))));
 
         ViewInteraction textView4 = onView(
                 allOf(withId(R.id.bmi_tv), withText("13.9"),
@@ -176,7 +183,7 @@ public class UITest {
         appCompatEditText5.perform(replaceText("150"), closeSoftKeyboard());
 
         ViewInteraction materialButton4 = onView(
-                allOf(withId(R.id.button), withText("Count"),
+                allOf(withId(R.id.button), withText(getResourceString(R.string.count_button)),
                         childAtPosition(
                                 allOf(withId(R.id.linearLayout),
                                         childAtPosition(
@@ -209,10 +216,10 @@ public class UITest {
         textView6.check(matches(withText("40.0")));
 
         ViewInteraction textView7 = onView(
-                allOf(withId(R.id.bmi_info_tv), withText("Obese"),
+                allOf(withId(R.id.bmi_info_tv), withText(getResourceString(R.string.info_obese)),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        textView7.check(matches(withText("Obese")));
+        textView7.check(matches(withText(getResourceString(R.string.info_obese))));
 
         ViewInteraction appCompatImageButton2 = onView(
                 allOf(withContentDescription("Navigate up"),
@@ -226,7 +233,7 @@ public class UITest {
         appCompatImageButton2.perform(click());
 
         ViewInteraction materialTextView3 = onView(
-                allOf(withId(R.id.bmi_tv), withText("BMI VALUE"),
+                allOf(withId(R.id.bmi_tv), withText(getResourceString(R.string.middle_tv)),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -246,7 +253,7 @@ public class UITest {
         overflowMenuButton.perform(click());
 
         ViewInteraction materialTextView4 = onView(
-                allOf(withId(androidx.appcompat.R.id.title), withText("Imperial system"),
+                allOf(withId(androidx.appcompat.R.id.title), withText(getResourceString(R.string.imperial_item)),
                         childAtPosition(
                                 childAtPosition(
                                         withId(androidx.appcompat.R.id.content),
@@ -256,11 +263,11 @@ public class UITest {
         materialTextView4.perform(click());
 
         ViewInteraction textView8 = onView(
-                allOf(withId(R.id.mass_tv), withText("Mass [lb]"),
+                allOf(withId(R.id.mass_tv), withText(getResourceString(R.string.mass_tv_i)),
                         withParent(allOf(withId(R.id.linearLayout),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
-        textView8.check(matches(withText("Mass [lb]")));
+        textView8.check(matches(withText(getResourceString(R.string.mass_tv_i))));
 
         ViewInteraction appCompatEditText6 = onView(
                 allOf(withId(R.id.massInput),
@@ -285,7 +292,7 @@ public class UITest {
         appCompatEditText7.perform(replaceText("60"), closeSoftKeyboard());
 
         ViewInteraction materialButton5 = onView(
-                allOf(withId(R.id.button), withText("Count"),
+                allOf(withId(R.id.button), withText(getResourceString(R.string.count_button)),
                         childAtPosition(
                                 allOf(withId(R.id.linearLayout),
                                         childAtPosition(
@@ -312,7 +319,7 @@ public class UITest {
         overflowMenuButton2.perform(click());
 
         ViewInteraction materialTextView5 = onView(
-                allOf(withId(androidx.appcompat.R.id.title), withText("Information about author"),
+                allOf(withId(androidx.appcompat.R.id.title), withText(getResourceString(R.string.info_item)),
                         childAtPosition(
                                 childAtPosition(
                                         withId(androidx.appcompat.R.id.content),
@@ -322,10 +329,10 @@ public class UITest {
         materialTextView5.perform(click());
 
         ViewInteraction textView10 = onView(
-                allOf(withId(R.id.textView), withText("Author: Bart³omiej Koptyra"),
+                allOf(withId(R.id.textView), withText(getResourceString(R.string.info_tv)),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        textView10.check(matches(withText("Author: Bart³omiej Koptyra")));
+        textView10.check(matches(withText(getResourceString(R.string.info_tv))));
 
         ViewInteraction appCompatImageButton3 = onView(
                 allOf(withContentDescription("Navigate up"),
@@ -349,7 +356,7 @@ public class UITest {
         overflowMenuButton3.perform(click());
 
         ViewInteraction materialTextView6 = onView(
-                allOf(withId(androidx.appcompat.R.id.title), withText("Imperial system"),
+                allOf(withId(androidx.appcompat.R.id.title), withText(getResourceString(R.string.imperial_item)),
                         childAtPosition(
                                 childAtPosition(
                                         withId(androidx.appcompat.R.id.content),
@@ -369,7 +376,7 @@ public class UITest {
         overflowMenuButton4.perform(click());
 
         ViewInteraction materialTextView7 = onView(
-                allOf(withId(androidx.appcompat.R.id.title), withText("Metric system"),
+                allOf(withId(androidx.appcompat.R.id.title), withText(getResourceString(R.string.metric_item)),
                         childAtPosition(
                                 childAtPosition(
                                         withId(androidx.appcompat.R.id.content),
@@ -379,11 +386,11 @@ public class UITest {
         materialTextView7.perform(click());
 
         ViewInteraction textView11 = onView(
-                allOf(withId(R.id.mass_tv), withText("Mass [kg]"),
+                allOf(withId(R.id.mass_tv), withText(getResourceString(R.string.mass_tv_m)),
                         withParent(allOf(withId(R.id.linearLayout),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
-        textView11.check(matches(withText("Mass [kg]")));
+        textView11.check(matches(withText(getResourceString(R.string.mass_tv_m))));
     }
 
     private static Matcher<View> childAtPosition(
