@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Lab 1</string>
     <string name="mass_tv_m">Mass [kg]</string>
+    <string name="mass_et_default"></string>
+    <string name="height_et_default"></string>
     <string name="height_tv_m">Height [cm]</string>
     <string name="mass_tv_i">Mass [lb]</string>
     <string name="height_tv_i">Height [in]</string>
@@ -12,11 +14,11 @@
     <string name="invalid_input_msg">Invalid input numbers!</string>
     <string name="invalid_input_btn">OK</string>
     <string name="info_item">Information about author</string>
+    <string name="last_meas_item">Previous measurements</string>
     <string name="info_tv">Author: Bartłomiej Koptyra</string>
     <string name="info_underweight">Underweight</string>
     <string name="info_normal_weight">Normal weight</string>
     <string name="info_overweight">Overweight</string>
     <string name="info_obese">Obese</string>
-
 
 </resources>

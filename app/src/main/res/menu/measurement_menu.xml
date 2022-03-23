@@ -13,4 +13,8 @@
     <item android:id="@+id/information_item"
         android:title="@string/info_item"
         app:showAsAction="never"/>
+
+    <item android:id="@+id/last_measurements_item"
+        android:title="@string/last_meas_item"
+        app:showAsAction="never"/>
 </menu>

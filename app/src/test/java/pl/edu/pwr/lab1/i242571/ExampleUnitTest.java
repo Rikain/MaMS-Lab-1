@@ -34,18 +34,16 @@ public class ExampleUnitTest {
 
     @Test
     public void bmi_metric_calc_isCorrect() {
-        bmi_calc.switchSystem(true);
-        assertEquals("21,6", bmi_calc.calculateBMI("180","70"));
-        assertEquals("25,5", bmi_calc.calculateBMI("140","50"));
-        assertEquals("15,0", bmi_calc.calculateBMI("200","60"));
+        assertEquals("21,6", bmi_calc.calculateBMI("180","70",true));
+        assertEquals("25,5", bmi_calc.calculateBMI("140","50",true));
+        assertEquals("15,0", bmi_calc.calculateBMI("200","60",true));
     }
 
     @Test
     public void bmi_imperial_calc_isCorrect() {
-        bmi_calc.switchSystem(false);
-        assertEquals("23,4", bmi_calc.calculateBMI("60","120"));
-        assertEquals("27,5", bmi_calc.calculateBMI("53","110"));
-        assertEquals("14,1", bmi_calc.calculateBMI("64","82"));
+        assertEquals("23,4", bmi_calc.calculateBMI("60","120",false));
+        assertEquals("27,5", bmi_calc.calculateBMI("53","110",false));
+        assertEquals("14,1", bmi_calc.calculateBMI("64","82",false));
     }
 
 }

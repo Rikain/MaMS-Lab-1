@@ -3,6 +3,8 @@ package pl.edu.pwr.lab1.i242571;
 
 import android.content.Context;
 
+import java.util.Collections;
+
 public class BMI {
 
     public enum bmi_level{
@@ -12,17 +14,14 @@ public class BMI {
         OBESE
     }
 
+    private static String serializeChar = ";";
+
     private static final int precision = 1;
     private static final double metricToImperial = 0.0703;
     private static final double underWeight = 18.5;
     private static final double normalWeight = 24.9;
     private static final double overWeight = 29.9;
 
-    private boolean metric = true;
-
-    public void switchSystem(boolean to_metric){
-        metric = to_metric;
-    }
 
     public static boolean validateInput(String height, String mass){
         if (height.isEmpty() || mass.isEmpty()){
@@ -41,7 +40,7 @@ public class BMI {
         }
     }
 
-    public String calculateBMI(String height, String mass){
+    public static String calculateBMI(String height, String mass, boolean metric){
         double bmi = Double.parseDouble(mass) / Math.pow(Double.parseDouble(height) / 100, 2);
         if(!metric){
             bmi = bmi * metricToImperial;
@@ -75,5 +74,38 @@ public class BMI {
                 return context.getResources().getColor(R.color.red);
         }
         return context.getResources().getColor(R.color.white);
+    }
+
+    public static String serializeBMIQueue(circularFifoQueue<String> queue){
+        StringBuilder queueString = new StringBuilder();
+        if (queue.isEmpty()){
+            return queueString.toString();
+        }
+        for (String o : queue){
+            queueString.append(o).append(serializeChar);
+        }
+        queueString.deleteCharAt(queueString.length()-1);
+        return queueString.toString();
+    }
+
+    private static String[] stringToArray(String queueString){
+        return queueString.split(serializeChar);
+    }
+
+    public static circularFifoQueue<String> deserializeBMIQueue(String queueString){
+        String[] arrOfStr = stringToArray(queueString);
+        int limit = arrOfStr.length;
+        return arrayToQueue(arrOfStr, limit);
+    }
+
+    private static circularFifoQueue<String> arrayToQueue(String[] arrOfStr, int limit){
+        circularFifoQueue<String> queue =  new circularFifoQueue<>(limit);
+        Collections.addAll(queue, arrOfStr);
+        return queue;
+    }
+
+    public static circularFifoQueue<String> deserializeBMIQueue(String queueString, int limit){
+        String[] arrOfStr = stringToArray(queueString);
+        return arrayToQueue(arrOfStr, limit);
     }
 }

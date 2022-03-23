@@ -2,10 +2,14 @@ package pl.edu.pwr.lab1.i242571;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,8 +24,16 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "TAG";
     public static final String BMI_MESSAGE = "pl.edu.pwr.lab1.i242571.BMI_MESSAGE";
+    public static final String MEASUREMENTS_MESSAGE = "pl.edu.pwr.lab1.i242571.MEASUREMENTS_MESSAGE";
 
-    private BMI bmi;
+    private static final String saved_measurements_key = "MEASUREMENTS_KEY";
+
+    private static final String default_measurements = "";
+
+
+    private MainActivityViewModel viewModel;
+    private SharedPreferences sharedPref;
+
     private TextView bmi_tv;
     private EditText mass_et;
     private EditText height_et;
@@ -29,12 +41,34 @@ public class MainActivity extends AppCompatActivity {
     private TextView height_tv;
     private Button count_button;
 
+    class MainActivityModelFactory extends ViewModelProvider.NewInstanceFactory {
+
+        private final SharedPreferences sharedPref;
+
+        public MainActivityModelFactory(SharedPreferences sharedPref) {
+            this.sharedPref = sharedPref;
+        }
+
+        @NonNull
+        @Override
+        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+            if (modelClass == MainActivityViewModel.class) {
+                return (T) new MainActivityViewModel(sharedPref);
+            }
+            return null;
+        }
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bmi = new BMI();
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        viewModel = new MainActivityModelFactory(sharedPref).create(MainActivityViewModel.class);
+
         count_button = findViewById(R.id.button);
         bmi_tv = findViewById(R.id.bmi_tv);
         mass_et = findViewById(R.id.massInput);
@@ -45,12 +79,12 @@ public class MainActivity extends AppCompatActivity {
         count_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String height = height_et.getText().toString();
-                String mass = mass_et.getText().toString();
-                if (bmi.validateInput(height, mass)){
-                    String bmi_value = bmi.calculateBMI(height, mass);
-                    bmi_tv.setText(bmi_value);
-                    bmi_tv.setTextColor(bmi.getBMIColor(MainActivity.this, bmi_value));
+                viewModel.height = height_et.getText().toString();
+                viewModel.mass = mass_et.getText().toString();
+                if (BMI.validateInput(viewModel.height, viewModel.mass)){
+                    viewModel.calculateBMI();
+                    bmi_tv.setText(viewModel.bmi_value);
+                    bmi_tv.setTextColor(BMI.getBMIColor(MainActivity.this, viewModel.bmi_value));
                 }else{
                     AlertDialog alert_dialog = new AlertDialog.Builder(MainActivity.this)
                             .setTitle(R.string.invalid_input_title)
@@ -64,20 +98,22 @@ public class MainActivity extends AppCompatActivity {
                             .create();
                     alert_dialog.show();
                 }
-                return;
             }
         });
         bmi_tv.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if (bmi_tv.getText().toString() != getResources().getString(R.string.middle_tv)){
+                if (!bmi_tv.getText().toString().equals(getResources().getString(R.string.middle_tv))){
                     Intent intent = new Intent(v.getContext(), BMIInfoActivity.class);
                     intent.putExtra(BMI_MESSAGE, bmi_tv.getText().toString());
                     startActivity(intent);
                 }
+                return;
             }
 
         });
+
+        readLastMeasurements();
 
         Log.d(TAG, "The onCreate() event");
     }
@@ -90,8 +126,7 @@ public class MainActivity extends AppCompatActivity {
             mass_tv.setText(R.string.mass_tv_i);
             height_tv.setText(R.string.height_tv_i);
         }
-        bmi.switchSystem(isMetric);
-        return;
+        viewModel.switchSystem(isMetric);
     }
 
     @Override
@@ -111,11 +146,29 @@ public class MainActivity extends AppCompatActivity {
                 switchMeasurement(false);
                 return true;
             case R.id.information_item:
+            {
                 Intent intent = new Intent(this, InformationActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            case R.id.last_measurements_item:
+                Intent intent = new Intent(this, LastMeasurementsActivity.class);
+                intent.putExtra(MEASUREMENTS_MESSAGE, BMI.serializeBMIQueue(viewModel.validMeasurements));
                 startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveCurrentMeasurements() {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(saved_measurements_key, BMI.serializeBMIQueue(viewModel.validMeasurements));
+        editor.apply();
+    }
+
+    private void readLastMeasurements() {
+        String queueString = sharedPref.getString(saved_measurements_key, default_measurements);
+        viewModel.loadQueue(queueString);
     }
 
     @Override
@@ -138,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStop(){
+        saveCurrentMeasurements();
         super.onStop();
         Log.d(TAG, "The onStop() event");
     }
