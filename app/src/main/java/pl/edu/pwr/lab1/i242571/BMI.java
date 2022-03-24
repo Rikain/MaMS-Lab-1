@@ -76,7 +76,7 @@ public class BMI {
         return context.getResources().getColor(R.color.white);
     }
 
-    public static String serializeBMIQueue(circularFifoQueue<String> queue){
+    public static String serializeBMIQueue(CircularFifoQueue<String> queue){
         StringBuilder queueString = new StringBuilder();
         if (queue.isEmpty()){
             return queueString.toString();
@@ -92,19 +92,19 @@ public class BMI {
         return queueString.split(serializeChar);
     }
 
-    public static circularFifoQueue<String> deserializeBMIQueue(String queueString){
+    public static CircularFifoQueue<String> deserializeBMIQueue(String queueString){
         String[] arrOfStr = stringToArray(queueString);
         int limit = arrOfStr.length;
         return arrayToQueue(arrOfStr, limit);
     }
 
-    private static circularFifoQueue<String> arrayToQueue(String[] arrOfStr, int limit){
-        circularFifoQueue<String> queue =  new circularFifoQueue<>(limit);
+    private static CircularFifoQueue<String> arrayToQueue(String[] arrOfStr, int limit){
+        CircularFifoQueue<String> queue =  new CircularFifoQueue<>(limit);
         Collections.addAll(queue, arrOfStr);
         return queue;
     }
 
-    public static circularFifoQueue<String> deserializeBMIQueue(String queueString, int limit){
+    public static CircularFifoQueue<String> deserializeBMIQueue(String queueString, int limit){
         String[] arrOfStr = stringToArray(queueString);
         return arrayToQueue(arrOfStr, limit);
     }

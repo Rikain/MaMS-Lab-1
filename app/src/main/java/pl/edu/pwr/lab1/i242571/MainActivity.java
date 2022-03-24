@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView height_tv;
     private Button count_button;
 
-    class MainActivityModelFactory extends ViewModelProvider.NewInstanceFactory {
+    static class MainActivityModelFactory extends ViewModelProvider.NewInstanceFactory {
 
         private final SharedPreferences sharedPref;
 

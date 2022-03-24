@@ -23,7 +23,7 @@ public class LastMeasurementsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String queueString = intent.getStringExtra(MainActivity.MEASUREMENTS_MESSAGE);
 
-        circularFifoQueue<String> queue = BMI.deserializeBMIQueue(queueString);
+        CircularFifoQueue<String> queue = BMI.deserializeBMIQueue(queueString);
         Collections.reverse(queue);
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(LastMeasurementsActivity.this, android.R.layout.simple_list_item_1, queue);

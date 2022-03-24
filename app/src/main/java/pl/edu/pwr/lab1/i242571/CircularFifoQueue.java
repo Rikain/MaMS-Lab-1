@@ -1,10 +1,10 @@
 package pl.edu.pwr.lab1.i242571;
 import java.util.LinkedList;
 
-public class circularFifoQueue<E> extends LinkedList<E>{
+public class CircularFifoQueue<E> extends LinkedList<E>{
     private int limit;
 
-    public circularFifoQueue(int limit) {
+    public CircularFifoQueue(int limit) {
         this.limit = limit;
     }
 

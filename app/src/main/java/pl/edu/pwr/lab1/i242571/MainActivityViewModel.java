@@ -17,7 +17,7 @@ public class MainActivityViewModel extends ViewModel {
 
     public boolean metric = true;
 
-    public circularFifoQueue<String> validMeasurements;
+    public CircularFifoQueue<String> validMeasurements;
 
     public MainActivityViewModel(SharedPreferences sharedPreferences){
         super();
